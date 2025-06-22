@@ -37,8 +37,8 @@ public class ActionPlan {
   @Column(name = "goal")
   private String goal;
 
-  @Column(name = "date")
-  private LocalDate date;
+  @Column(name = "creation_date")
+  private LocalDate creationDate;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false)
