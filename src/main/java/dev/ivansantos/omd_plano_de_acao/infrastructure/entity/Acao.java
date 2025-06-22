@@ -32,8 +32,8 @@ public class Acao {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  @Column(name = "acao", nullable = false) // descricao
-  private String acao;
+  @Column(name = "titulo", nullable = false)
+  private String titulo;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false)
