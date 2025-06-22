@@ -1,9 +1,13 @@
 package dev.ivansantos.omd_plano_de_acao.business.service;
 
+import dev.ivansantos.omd_plano_de_acao.api.dto.ActionPlanRequest;
 import dev.ivansantos.omd_plano_de_acao.infrastructure.entity.Action;
 import dev.ivansantos.omd_plano_de_acao.infrastructure.entity.ActionPlan;
 import dev.ivansantos.omd_plano_de_acao.infrastructure.repository.ActionPlanRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ActionPlanService {
@@ -14,8 +18,20 @@ public class ActionPlanService {
     this.repository = repository;
   }
 
-  public void savePlanoDeAcao(ActionPlan actionPlan) {
+  public void saveActionPlan(ActionPlanRequest request) {
+    ActionPlan actionPlan = ActionPlan.builder()
+                    .title(request.getTitle())
+            .goal(request.getGoal())
+            .creationDate(LocalDate.now())
+            .status(ActionPlan.Status.PENDING)
+            .actions(List.of())
+                            .build();
+
     repository.saveAndFlush(actionPlan);
+  }
+
+  public List<ActionPlan> getAllActionPlans() {
+    return repository.findAll();
   }
 
   public ActionPlan getActionPlanById(Integer id) {
@@ -33,7 +49,7 @@ public class ActionPlanService {
 
     actionPlan.setTitle(updatedActionPlan.getTitle() != null ? updatedActionPlan.getTitle() : actionPlan.getTitle());
     actionPlan.setGoal(updatedActionPlan.getGoal() != null ? updatedActionPlan.getGoal() : actionPlan.getGoal());
-    actionPlan.setDate(updatedActionPlan.getDate() != null ? updatedActionPlan.getDate() : actionPlan.getDate());
+    actionPlan.setCreationDate(updatedActionPlan.getCreationDate() != null ? updatedActionPlan.getCreationDate() : actionPlan.getCreationDate());
 
     repository.saveAndFlush(actionPlan);
   }
