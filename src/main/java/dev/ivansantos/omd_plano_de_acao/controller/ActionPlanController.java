@@ -29,15 +29,15 @@ public class ActionPlanController {
     return ResponseEntity.ok(actionPlanService.getAllActionPlans());
   }
 
-  @GetMapping
-  public ResponseEntity<ActionPlan> getActionPlanById(@RequestParam Integer id) {
+  @GetMapping("/{id}")
+  public ResponseEntity<ActionPlan> getActionPlanById(@PathVariable Integer id) {
     return ResponseEntity.ok(actionPlanService.getActionPlanById(id));
   }
 
-  @DeleteMapping
-  public ResponseEntity<Void> deleteActionPlanById(@RequestParam Integer id) {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteActionPlanById(@PathVariable Integer id) {
     actionPlanService.deleteActionPlanById(id);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 
   @PutMapping("/{id}")
