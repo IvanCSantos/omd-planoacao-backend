@@ -4,7 +4,9 @@ import dev.ivansantos.omd_plano_de_acao.api.dto.ActionPlanRequest;
 import dev.ivansantos.omd_plano_de_acao.infrastructure.entity.Action;
 import dev.ivansantos.omd_plano_de_acao.infrastructure.entity.ActionPlan;
 import dev.ivansantos.omd_plano_de_acao.infrastructure.repository.ActionPlanRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +20,7 @@ public class ActionPlanService {
     this.repository = repository;
   }
 
-  public void saveActionPlan(ActionPlanRequest request) {
+  public ActionPlan saveActionPlan(ActionPlanRequest request) {
     ActionPlan actionPlan = ActionPlan.builder()
                     .title(request.getTitle())
             .goal(request.getGoal())
@@ -27,7 +29,7 @@ public class ActionPlanService {
             .actions(List.of())
                             .build();
 
-    repository.saveAndFlush(actionPlan);
+    return repository.saveAndFlush(actionPlan);
   }
 
   public List<ActionPlan> getAllActionPlans() {
@@ -36,24 +38,27 @@ public class ActionPlanService {
 
   public ActionPlan getActionPlanById(Integer id) {
     return repository.findById(id).orElseThrow(
-            () -> new RuntimeException("ID não encontrado")
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ActionPlan ID " + id + " não encontrado")
     );
   }
 
   public void deleteActionPlanById(Integer id) {
-    repository.deleteById(id);
+    ActionPlan actionPlan = getActionPlanById(id);
+    repository.delete(actionPlan);
   }
 
-  public void updateActionPlanById(Integer id, ActionPlanRequest request) {
+  public ActionPlan updateActionPlanById(Integer id, ActionPlanRequest request) {
     ActionPlan actionPlan = getActionPlanById(id);
 
     actionPlan.setTitle(request.getTitle() != null ? request.getTitle() : actionPlan.getTitle());
     actionPlan.setGoal(request.getGoal() != null ? request.getGoal() : actionPlan.getGoal());
 
-    repository.saveAndFlush(actionPlan);
+    ActionPlan updatedActionPlan =  repository.saveAndFlush(actionPlan);
+
+    return updatedActionPlan;
   }
 
-  public void updateActionPlanStatus(Integer id) {
+  public ActionPlan updateActionPlanStatus(Integer id) {
     ActionPlan actionPlan = getActionPlanById(id);
 
     boolean allConcluded = actionPlan.getActions().stream()
@@ -64,7 +69,7 @@ public class ActionPlanService {
             : ActionPlan.Status.PENDING;
 
     actionPlan.setStatus(newStatus);
-    repository.saveAndFlush(actionPlan);
+    return repository.saveAndFlush(actionPlan);
   }
 
 
