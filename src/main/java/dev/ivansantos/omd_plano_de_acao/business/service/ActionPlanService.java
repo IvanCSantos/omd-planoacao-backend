@@ -44,12 +44,11 @@ public class ActionPlanService {
     repository.deleteById(id);
   }
 
-  public void updateActionPlanById(Integer id, ActionPlan updatedActionPlan) {
+  public void updateActionPlanById(Integer id, ActionPlanRequest request) {
     ActionPlan actionPlan = getActionPlanById(id);
 
-    actionPlan.setTitle(updatedActionPlan.getTitle() != null ? updatedActionPlan.getTitle() : actionPlan.getTitle());
-    actionPlan.setGoal(updatedActionPlan.getGoal() != null ? updatedActionPlan.getGoal() : actionPlan.getGoal());
-    actionPlan.setCreationDate(updatedActionPlan.getCreationDate() != null ? updatedActionPlan.getCreationDate() : actionPlan.getCreationDate());
+    actionPlan.setTitle(request.getTitle() != null ? request.getTitle() : actionPlan.getTitle());
+    actionPlan.setGoal(request.getGoal() != null ? request.getGoal() : actionPlan.getGoal());
 
     repository.saveAndFlush(actionPlan);
   }

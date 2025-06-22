@@ -6,5 +6,4 @@ import lombok.Data;
 public class ActionPlanRequest {
   private String title;
   private String goal;
-
 }

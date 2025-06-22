@@ -40,9 +40,9 @@ public class ActionPlanController {
     return ResponseEntity.ok().build();
   }
 
-  @PutMapping
-  public ResponseEntity<Void> updateActionPlanById(@RequestParam Integer id, @RequestBody ActionPlan actionPlan) {
-    actionPlanService.updateActionPlanById(id, actionPlan);
+  @PutMapping("/{id}")
+  public ResponseEntity<Void> updateActionPlanById(@PathVariable Integer id, @RequestBody ActionPlanRequest request) {
+    actionPlanService.updateActionPlanById(id, request);
     return ResponseEntity.ok().build();
   }
 }
