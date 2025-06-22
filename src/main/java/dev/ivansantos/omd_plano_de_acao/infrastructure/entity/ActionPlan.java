@@ -11,18 +11,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "planos_de_acao")
+@Table(name = "action_plans")
 @Entity
-public class PlanoDeAcao {
+public class ActionPlan {
 
   public static enum Status {
-    PENDENTE,
-    CONCLUIDO;
+    PENDING,
+    COMPLETED;
 
-    public String getDescricao() {
+    public String getDescription() {
       return switch (this) {
-        case PENDENTE -> "Pendente";
-        case CONCLUIDO -> "Concluido";
+        case PENDING -> "Pendente";
+        case COMPLETED -> "Concluido";
       };
     }
   }
@@ -31,20 +31,20 @@ public class PlanoDeAcao {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  @Column(name = "titulo", nullable = false)
-  private String titulo;
+  @Column(name = "title", nullable = false)
+  private String title;
 
-  @Column(name = "objetivo")
-  private String objetivo;
+  @Column(name = "goal")
+  private String goal;
 
-  @Column(name = "data")
-  private LocalDate data;
+  @Column(name = "date")
+  private LocalDate date;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false)
   private Status status;
 
-  @OneToMany(mappedBy = "plano", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Acao> acoes;
+  @OneToMany(mappedBy = "actionPlan", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Action> actions;
 
 }

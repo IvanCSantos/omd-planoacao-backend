@@ -10,20 +10,20 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "acoes")
+@Table(name = "actions")
 @Entity
-public class Acao {
+public class Action {
 
   public static enum Status {
-    PENDENTE,
-    EM_ANDAMENTO,
-    CONCLUIDO;
+    PENDING,
+    IN_PROGRESS,
+    COMPLETED;
 
-    public String getDescricao() {
+    public String getDescription() {
       return switch (this) {
-        case PENDENTE -> "Pendente";
-        case EM_ANDAMENTO -> "Em andamento";
-        case CONCLUIDO -> "Concluido";
+        case PENDING -> "Pendente";
+        case IN_PROGRESS -> "Em andamento";
+        case COMPLETED -> "Concluido";
       };
     }
   }
@@ -32,17 +32,17 @@ public class Acao {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  @Column(name = "titulo", nullable = false)
-  private String titulo;
+  @Column(name = "title", nullable = false)
+  private String title;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false)
   private Status status;
 
-  @Column(name = "prazo")
-  private LocalDate prazo;
+  @Column(name = "due_date")
+  private LocalDate dueDate;
 
   @ManyToOne
-  @JoinColumn(name = "plano_id", nullable = false)
-  private PlanoDeAcao plano;
+  @JoinColumn(name = "action_plan_id", nullable = false)
+  private ActionPlan actionPlan;
 }
