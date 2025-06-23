@@ -26,7 +26,7 @@ docker build -t omd-plano-de-acao .
 
 ### Executando o container
 ```shell
-docker run -p 8080:8080 omd-plano-de-acao
+docker container run -p 8080:8080 omd-plano-de-acao
 ```
 
 ### Acesse em:
@@ -44,6 +44,15 @@ Senha: (em branco)
 ## Documentação da API
 A documentação da API pode ser acessada em:
 http://localhost:8080/swagger-ui/index.html
+
+## Testes via Postman
+As collections do Postman estão disponíveis na pasta /postman deste repositório.
+Incluem requisições para as entidades ActionPlan e Action, organizadas por método HTTP
+
+### Para importar:
+1. Abra o Postman
+2. Clique em import
+3. Selecione os arquivos .json da pasta postman
 
 ## Desenvolvido por
 Ivan Carlos dos Santos
