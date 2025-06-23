@@ -29,8 +29,7 @@ docker build -t omd-plano-de-acao .
 docker container run -p 8080:8080 omd-plano-de-acao
 ```
 
-### Acesse em:
-http://localhost:8080
+A API é executada em: http://localhost:8080
 
 ## Acesso ao Banco de Dados H2 (ambiente de desenvolvimento)
 URL: http://localhost:8080/h2-console
